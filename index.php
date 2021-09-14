@@ -1,6 +1,6 @@
 <?php
 // Used PHP version 7.4;
-// Created by Avizal (Ruslan Prichepa) 21.02.2020
+// Created by Avizal (Ruslan Prichepa)
 
 
 require_once "modules/help.php"; //Подключение внешнего файла.
