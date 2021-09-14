@@ -2,12 +2,18 @@
 // Used PHP version 7.4;
 // Created by Avizal (Ruslan Prichepa)
 
+// Todo: Сделать модульную структуру. Каждый парсер - это отдельный модуль.
+// todo: Спарсить сайт www.bic-code.org/
+// todo: Прописать нормальные объекты. По стандартам ООП и PSR.
+// todo: Перевести проект полностью на английский.
+// todo: Грохнуть старую ветку вместе с тем ужасом, что там был. Легче написать новую прогрпамму, чем приводить в порядок то, что есть.
+// todo: Как-то стандартизировать вывод информации.
 
 require_once "modules/help.php"; //Подключение внешнего файла.
 require_once "modules/parse.php"; //Подключение внешнего файла.
 require_once "modules/merger.php";
 require_once "modules/save.php";
-require_once "modules/load.php";
+require_once "modules/LoadFromCsv.php";
 require_once "modules/report.php";
 require_once "modules/checks.php";
 
@@ -15,7 +21,7 @@ require_once "modules/checks.php";
 $help = new help;
 $parce = new parse;
 $save = new save;
-$loadcsv = new loadfromcsv;
+$loadcsv = new LoadFromCsv;
 $Report = new Report;
 $Checks = new checks;
 
