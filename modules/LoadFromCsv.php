@@ -1,5 +1,5 @@
 <?php 
-class loadfromcsv {
+class LoadFromCsv {
 
     function load($inputPath) { // Загружаем данные из CSV файла 
         

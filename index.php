@@ -9,6 +9,27 @@
 // todo: Грохнуть старую ветку вместе с тем ужасом, что там был. Легче написать новую прогрпамму, чем приводить в порядок то, что есть.
 // todo: Как-то стандартизировать вывод информации.
 
+// Устанавливаем директорию приложения
+const PATH_DIR = __DIR__;
+
+// Получение конфигураций проекта
+const PATH_CONFIG = PATH_DIR . "/config/config.php";
+if (file_exists(PATH_CONFIG)) {
+    require_once PATH_CONFIG;
+} else {
+    exit("Невозможно подключить файл конфигураций:" . PHP_EOL . PATH_CONFIG);
+}
+
+// Подключение всех служебных классов
+if (file_exists(PATH_STARTUP)) {
+    require_once PATH_STARTUP;
+    $startup = new Startup();
+} else {
+    exit("Не возможно произвести авто-подключение классов" . PHP_EOL . PATH_STARTUP);
+}
+
+exit("Конец новой программы!");
+
 require_once "modules/help.php"; //Подключение внешнего файла.
 require_once "modules/parse.php"; //Подключение внешнего файла.
 require_once "modules/merger.php";
@@ -18,7 +39,7 @@ require_once "modules/report.php";
 require_once "modules/checks.php";
 
 //Создание объектов.
-$help = new help;
+$help = new Help;
 $parce = new parse;
 $save = new save;
 $loadcsv = new LoadFromCsv;
@@ -43,8 +64,7 @@ if (count($arguments) > 2) { // Если предоставлено достат
         } else {
             echo "Результатов по данному домену не найдено!";
         }
-    }
-    else if ($arguments[1] == "parse") { //Если от нас хотят спарсить сайт.
+    } else if ($arguments[1] == "parse") { //Если от нас хотят спарсить сайт.
         $IsHelp = false; // Если пользователю нет необходимости показывать справку.
         $TotalAdress = $Checks->InitTotalArray($url); // Инициализируем массив и заполняем начальными данными.
         $TotalForSearch[] = $url; // Указываем начальную страничку для парсинга
@@ -60,6 +80,6 @@ if ($IsHelp) { // Если пользователю нужно показать 
     $help->GetHelp();// Показываем справку.
 }
 
-echo "\nКонец выполнения программы"; // Просто сообщаем, о завершении работы программы.
+echo PHP_EOL . "Конец выполнения программы"; // Просто сообщаем, о завершении работы программы.
 
- ?>
+?>
