@@ -2,25 +2,61 @@
 
 class Arguments
 {
+    protected $fileStartup = "";
     protected $arguments = [];
     protected $countArgs = 0;
 
     public function __construct($args = [])
     {
-        $this->countArgs = func_num_args();
-        $this->arguments = func_get_args();
+        $countArgs = func_num_args();
+        $arguments = func_get_args();
 
-//        if ($this->countArgs > 0) {
-//            for ($i = 0; $i < $this->countArgs; $i++) {
-//                //$arguments[] = func_get_arg();
-//                $this->arguments[] = func_get_arg($i);
-//            }
-//        }
+        if (!empty($arguments)) {
+            $arguments = array_shift($arguments);
+            $countArgs = count($arguments);
+        }
 
+        // Получаем имя исполняемого файла, обычно это "index.php". И, удаляем аргумент из массива.
+        if ($countArgs > 0) {
+            if (!empty($arguments[0])) {
+                $this->fileStartup = $arguments[0];
+                array_shift($arguments);
+                $countArgs--;
+            }
+        }
 
-//        $foreach ($arguments as $argument) {
-//            $this->arguments[] = $argument;
-//        }
+        // Если в массиве еще есть аргументы, то обработаем их.
+        if ($countArgs > 0) {
+            $attr = null;
+            $value = null;
+
+            foreach ($arguments as $argument) {
+                if (strpos($argument, '-') === 0) {
+                    $attr = ltrim($argument, '-');
+                    continue;
+                }
+
+                if ($attr !== null) {
+                    $value = $argument;
+                }
+
+                if (!empty($attr) && !empty($value)) {
+                    $this->setArgument($attr, $value);
+
+                    $attr = null;
+                    $value = null;
+
+                    continue;
+                }
+            }
+
+            $this->updateCountArgument();
+        }
+    }
+
+    public function getArgument($attr)
+    {
+        return $this->arguments[$attr] ?? false;
     }
 
     public function getArguments(): array
@@ -28,7 +64,23 @@ class Arguments
         return $this->arguments;
     }
 
-    public function getCount():int {
+    public function getCount(): int
+    {
         return $this->countArgs;
+    }
+
+    protected function setArgument($attr, $value): bool
+    {
+        if (!is_string($attr) && !is_numeric($attr)) {
+            return false;
+        }
+
+        $this->arguments[$attr] = $value;
+
+        return true;
+    }
+
+    protected function updateCountArgument() {
+        $this->countArgs = count($this->arguments);
     }
 }
