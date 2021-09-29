@@ -80,7 +80,26 @@ class Arguments
         return true;
     }
 
-    protected function updateCountArgument() {
+    protected function updateCountArgument()
+    {
         $this->countArgs = count($this->arguments);
+    }
+
+    public function isExist($attr): bool
+    {
+        if (isset($this->arguments[$attr])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isEmpty($attr): bool
+    {
+        if (empty($this->arguments[$attr])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
