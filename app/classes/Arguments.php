@@ -56,7 +56,7 @@ class Arguments
 
     public function getArgument($attr)
     {
-        return $this->arguments[$attr] ?? false;
+        return $this->arguments[$attr] ?? null;
     }
 
     public function getArguments(): array

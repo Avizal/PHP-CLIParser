@@ -28,11 +28,12 @@ if (file_exists(PATH_STARTUP)) {
     exit("Невозможно произвести авто-подключение классов" . PHP_EOL . PATH_STARTUP);
 }
 
-// todo: Добавить класс для работы с входящими параметрами
+// Инициализируем класс для работы с параметрами
+$arguments = new Arguments($argv);
+
 // todo: Через класс класс с параметрами, выбирать парсер в классе стартапе, и запускать
 // todo: Написать класс для сохранения результатов
 
-$arguments = new Arguments($argv);
 
 print_r($arguments->getArguments());
 print_r($arguments->getCount());
