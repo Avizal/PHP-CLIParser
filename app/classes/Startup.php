@@ -10,9 +10,9 @@ class Startup
     public function loadClasses()
     {
         // Получаем список всех файлов в директории за исключением '.' и '..'
-        $files = array_diff(scandir(PATH_CLASSES), array('..', '.'));
+        $files = array_diff(scandir(PATH_CLASSES), array('.', '..'));
 
-        // Подключаем все найденные классы
+        // Подключаем все найденные классы из папки "app/classes"
         foreach ($files as $file) {
             $class = PATH_CLASSES . '/' . $file;
 
