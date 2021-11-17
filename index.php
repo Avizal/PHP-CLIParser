@@ -13,6 +13,13 @@
 // Устанавливаем директорию приложения
 const PATH_DIR = __DIR__;
 
+//Подключаем Composer и его автозагрузку классов по namespace
+if (file_exists(PATH_DIR . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+} else {
+    exit('Composer не обнаружен');
+}
+
 // Получение конфигураций проекта
 const PATH_CONFIG = PATH_DIR . "/config/config.php";
 if (file_exists(PATH_CONFIG)) {
@@ -30,14 +37,14 @@ if (file_exists(PATH_STARTUP)) {
 }
 
 // Инициализируем класс для работы с параметрами
-$arguments = new Arguments($argv);
+//$arguments = new Arguments();
 
 // todo: Через класс класс с параметрами, выбирать парсер в классе стартапе, и запускать
 // todo: Написать класс для сохранения результатов
 
-
-print_r($arguments->getArguments());
-print_r($arguments->getCount());
+//
+//print_r($arguments->getArguments());
+//print_r($arguments->getCount());
 
 exit("Конец новой программы!");
 

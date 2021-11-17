@@ -1,31 +1,35 @@
 <?php
 
-class Arguments
+namespace App\Classes;
+
+final class Arguments
 {
     protected $fileStartup = "";
     protected $arguments = [];
     protected $countArgs = 0;
 
-    public function __construct($args = [])
+    public function __construct()
     {
-        $countArgs = func_num_args();
-        $arguments = func_get_args();
+        $arguments = $_SERVER['argv'] ?? [];
+        $countArgs = $_SERVER['argc'] ?? 0;
 
-        if (!empty($arguments)) {
-            $arguments = array_shift($arguments);
-            $countArgs = count($arguments);
-        }
+        $this->extractFirstArgument($arguments, $countArgs);
+        $this->loadArguments($arguments, $countArgs);
+    }
 
+    protected function extractFirstArgument(&$arguments, &$countArgs): void
+    {
         // Получаем имя исполняемого файла, обычно это "index.php". И, удаляем аргумент из массива.
         if ($countArgs > 0) {
             if (!empty($arguments[0])) {
-                $this->fileStartup = $arguments[0];
-                array_shift($arguments);
+                $this->fileStartup = array_shift($arguments);
                 $countArgs--;
             }
         }
+    }
 
-        // Если в массиве еще есть аргументы, то обработаем их.
+    public function loadArguments(&$arguments, &$countArgs): void
+    {
         if ($countArgs > 0) {
             $attr = null;
             $value = null;
