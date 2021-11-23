@@ -28,16 +28,20 @@ if (file_exists(PATH_CONFIG)) {
     exit("Невозможно подключить файл конфигураций:" . PHP_EOL . PATH_CONFIG);
 }
 
-// Подключение всех служебных классов
-if (file_exists(PATH_STARTUP)) {
-    require_once PATH_STARTUP;
-    $startup = new Startup();
-} else {
-    exit("Невозможно произвести авто-подключение классов" . PHP_EOL . PATH_STARTUP);
-}
+//Подключаем класс автозагрузки
+use \App\Classes\Startup;
+$startup = new Startup();
 
-// Инициализируем класс для работы с параметрами
-//$arguments = new Arguments();
+//// Подключение всех служебных классов
+//if (file_exists(PATH_STARTUP)) {
+//    require_once PATH_STARTUP;
+//    $startup = new Startup();
+//} else {
+//    exit("Невозможно произвести авто-подключение классов" . PHP_EOL . PATH_STARTUP);
+//}
+
+// Запуск алгоритма (всего)
+$startup->start();
 
 // todo: Через класс класс с параметрами, выбирать парсер в классе стартапе, и запускать
 // todo: Написать класс для сохранения результатов

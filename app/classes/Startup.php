@@ -1,6 +1,6 @@
 <?php
 
-use App\Classes\Arguments;
+namespace App\Classes;
 
 class Startup
 {
@@ -28,42 +28,25 @@ class Startup
         }
     }
 
-
-
-
-
-
-    protected $namespacesMap = array();
-
-    public function addNamespace($namespace, $rootDir)
+    public function start()
     {
-        if (is_dir($rootDir)) {
-            $this->namespacesMap[$namespace] = $rootDir;
-            return true;
+        $response = null;
+
+        if ($this->isNeedHelp()) {
+            $response = $this->getHelp();
         }
 
-        return false;
+        echo $response;
     }
 
-    public function register()
+    protected function isNeedHelp(): bool
     {
-        spl_autoload_register(array($this, 'autoload'));
+        return true;
     }
 
-    protected function autoload($class)
+    protected function getHelp(): string
     {
-        $pathParts = explode('\\', $class);
-
-        if (is_array($pathParts)) {
-            $namespace = array_shift($pathParts);
-
-            if (!empty($this->namespacesMap[$namespace])) {
-                $filePath = $this->namespacesMap[$namespace] . '/' . implode('/', $pathParts) . '.php';
-                require_once $filePath;
-                return true;
-            }
-        }
-
-        return false;
+        $helper = new Helper();
+        return $helper->getHelp();
     }
 }
